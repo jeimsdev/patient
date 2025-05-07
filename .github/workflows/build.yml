@@ -33,14 +33,14 @@ jobs:
           restore-keys: ${{ runner.os }}-gradle
       - name: Make gradlew executable
         run: chmod +x ./gradlew
-      - name: Run tests
+      - name: Run tests and generate JaCoCo report
         run: ./gradlew test
-      - name: Upload Test Results
+      - name: Upload JaCoCo HTML Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-results
-          path: build/test-results/
+          name: jacoco-html-report
+          path: build/reports/jacoco/test/html
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
