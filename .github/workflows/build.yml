@@ -34,13 +34,19 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
       - name: Run tests and generate JaCoCo report
-        run: ./gradlew test
+        run: ./gradlew jacocoTestReport
       - name: Upload JaCoCo HTML Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: jacoco-html-report
           path: build/reports/jacoco/test/html
+      - name: Upload JaCoCo XML Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-xml-report
+          path: build/reports/jacoco/test/jacocoTestReport.xml
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
